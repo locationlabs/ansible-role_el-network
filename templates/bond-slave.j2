@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+TYPE=Ethernet
+BOOTPROTO=none
+DEVICE={{ item.iface }}
+ONBOOT=yes
+MASTER={{ item.master }}
+SLAVE=yes

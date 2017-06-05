@@ -1,0 +1,4 @@
+---
+  el_network_whitelist_ifaces:
+    - lo
+    - idrac

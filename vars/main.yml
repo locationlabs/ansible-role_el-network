@@ -1,0 +1,2 @@
+---
+  el_network_configured_ifaces: "{{ el_network_interfaces | map(attribute='iface') | list }}"

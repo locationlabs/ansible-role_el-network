@@ -1,0 +1,23 @@
+---
+  - include: discovery.yml
+
+  - name: Add/Modify network interfaces
+    template:
+      src: "templates/{{ item.type }}.j2"
+      dest: "/etc/sysconfig/network-scripts/ifcfg-{{ item.iface }}"
+    with_items:
+      - "{{ el_network_interfaces }}"
+    notify:
+      - reload nm
+      - restart networking
+
+  - name: Delete unconfigured network interfaces
+    file:
+      path: "/etc/sysconfig/network-scripts/ifcfg-{{ item }}"
+      state: absent
+    with_items:
+      - "{{ el_network_unconfigured_ifaces }}"
+    when: el_network_unconfigured_ifaces.0 is defined
+    notify:
+      - reload nm
+      - restart networking

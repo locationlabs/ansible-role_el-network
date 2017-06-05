@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+TYPE=Ethernet
+BOOTPROTO=none
+DEVICE={{ item.iface }}
+IPADDR={{ item.ip4|ipv4('address') }}
+PREFIX={{ item.ip4|ipv4('prefix') }}
+{% if item.gw4 is defined %}
+GATEWAY={{ item.gw4 }}
+{% endif %}
+ONBOOT=yes
