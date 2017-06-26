@@ -20,21 +20,28 @@ N/A
 
 Example vars setup:
 
-    el_network_interfaces:
-      - iface: ens32
-        type: ethernet
-        ip4: '192.168.0.10/24'
-        gw4: '192.168.0.1'
-      - iface: ens33
-        type: bond-slave
-        master: bond0
-      - iface: bond0
-        type: bond
-        ip4: '10.0.0.10/24'
-        bonding_mode: 4
+```yaml
+el_network_interfaces:
+  - iface: ens32
+    type: ethernet
+    ip4: '192.168.0.10/24'
+  - iface: ens33
+    type: bond-slave
+    master: bond0
+  - iface: bond0
+    type: bond
+    bonding_mode: 4
+    bridge: br0
+  - iface: br0
+    type: bridge
+    ip4: '10.0.0.10/24'
+    gw4: '10.0.0.1'
+```
 
 Then simply run the role:
 
-    - hosts: servers
-      roles:
-        - el-network
+```yaml
+- hosts: servers
+  roles:
+    - el-network
+```
