@@ -1,17 +1,14 @@
 # {{ ansible_managed }}
-TYPE=Ethernet
+TYPE=Bridge
 BOOTPROTO=none
 DEVICE={{ item.iface }}
-{% if item.bridge is defined %}
-BRIDGE={{ item.bridge }}
-{% else %}
 {% if item.ip4 is defined %}
 IPADDR={{ item.ip4|ipv4('address') }}
 PREFIX={{ item.ip4|ipv4('prefix') }}
-{% endif %}
 {% if item.gw4 is defined %}
 GATEWAY={{ item.gw4 }}
 {% endif %}
 {% endif %}
 ONBOOT=yes
+DELAY=0
 NM_CONTROLLED=no

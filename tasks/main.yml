@@ -1,4 +1,10 @@
 ---
+  - name: Disable NetworkManager
+    systemd:
+      name: NetworkManager
+      state: stopped
+      enabled: no
+
   - include: discovery.yml
 
   - name: Add/Modify network interfaces
@@ -8,7 +14,6 @@
     with_items:
       - "{{ el_network_interfaces }}"
     notify:
-      - reload nm
       - restart networking
 
   - name: Delete unconfigured network interfaces
@@ -19,5 +24,4 @@
       - "{{ el_network_unconfigured_ifaces }}"
     when: el_network_unconfigured_ifaces.0 is defined
     notify:
-      - reload nm
       - restart networking

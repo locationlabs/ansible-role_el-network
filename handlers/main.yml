@@ -1,7 +1,4 @@
 ---
-  - name: reload nm
-    command: nmcli connection reload
-
   - name: restart networking
     systemd:
       name: network

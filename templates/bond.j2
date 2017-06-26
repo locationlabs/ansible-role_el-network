@@ -3,6 +3,9 @@ TYPE=bond
 BOOTPROTO=none
 BONDING_MASTER=yes
 DEVICE={{ item.iface }}
+{% if item.bridge is defined %}
+BRIDGE={{ item.bridge }}
+{% else %}
 {% if item.ip4 is defined %}
 IPADDR={{ item.ip4|ipv4('address') }}
 PREFIX={{ item.ip4|ipv4('prefix') }}
@@ -10,5 +13,7 @@ PREFIX={{ item.ip4|ipv4('prefix') }}
 {% if item.gw4 is defined %}
 GATEWAY={{ item.gw4 }}
 {% endif %}
+{% endif %}
 ONBOOT=yes
 BONDING_OPTS="mode={{ item.bonding_mode|default(4)}}{% if item.bonding_mode is defined %}{% if item.bonding_mode=='4' %} lacp_rate={{ item.lacp_rate|default(1) }}{% endif %}{% if item.bonding_mode=='2' or item.bonding_mode=='4' %} xmit_hash_policy={{ item.xmit_hash_policy|default('layer3+4') }}{% endif %}{% endif %} miimon={{ item.miimon|default(100) }}"
+NM_CONTROLLED=no
