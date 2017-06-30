@@ -1,6 +1,13 @@
 # {{ ansible_managed }}
 TYPE=Ethernet
+{% if item.dhcp|default(None) %}
+BOOTPROTO=dhcp
+DEFROUTE=yes
+PEERDNS=yes
+PEERROUTES=yes
+{% else %}
 BOOTPROTO=none
+{% endif %}
 DEVICE={{ item.iface }}
 {% if item.bridge is defined %}
 BRIDGE={{ item.bridge }}
