@@ -1,5 +1,10 @@
 # {{ ansible_managed }}
+{% if item.ovs|default(false) %}
+DEVICETYPE=ovs
+TYPE=OVSBridge
+{% else %}
 TYPE=Bridge
+{% endif %}
 BOOTPROTO=none
 DEVICE={{ item.iface }}
 {% if item.ip4 is defined %}

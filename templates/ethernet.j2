@@ -1,5 +1,10 @@
 # {{ ansible_managed }}
+{% if item.ovs|default(false) %}
+TYPE=OVSPort
+DEVICETYPE=ovs
+{% else %}
 TYPE=Ethernet
+{% endif %}
 {% if item.dhcp|default(None) %}
 BOOTPROTO=dhcp
 DEFROUTE=yes
@@ -10,7 +15,11 @@ BOOTPROTO=none
 {% endif %}
 DEVICE={{ item.iface }}
 {% if item.bridge is defined %}
+{% if item.ovs|default(false) %}
+OVS_BRIDGE={{ item.bridge }}
+{% else %}
 BRIDGE={{ item.bridge }}
+{% endif %}
 {% else %}
 {% if item.ip4 is defined %}
 IPADDR={{ item.ip4|ipv4('address') }}
