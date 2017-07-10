@@ -3,5 +3,5 @@
     systemd:
       name: network
       state: restarted
-    async: 5
+    async: 45
     poll: 5
