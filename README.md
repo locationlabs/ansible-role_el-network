@@ -45,3 +45,23 @@ Then simply run the role:
   roles:
     - el-network
 ```
+
+---
+
+## OVS
+
+Simple OVS support exists to integrate an interface and/or bridge into OVS. **Note:** This role does
+not install OVS, that is left up to the admin. 
+
+```yaml
+el_network_interfaces:
+  - iface: ens33
+    type: ethernet
+    bridge: br-ex
+    ovs: yes
+
+  - iface: br-ex
+    type: bridge
+    ovs: yes
+    ip4: '172.16.0.10/24'
+```
