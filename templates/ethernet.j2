@@ -31,6 +31,7 @@ GATEWAY={{ item.gw4 }}
 {% endif %}
 {% if item.vlan|default(false) %}
 VLAN=yes
+ONPARENT=yes
 {% endif %}
 ONBOOT=yes
 NM_CONTROLLED=no
