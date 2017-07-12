@@ -29,5 +29,8 @@ PREFIX={{ item.ip4|ipv4('prefix') }}
 GATEWAY={{ item.gw4 }}
 {% endif %}
 {% endif %}
+{% if item.vlan|default(false) %}
+VLAN=yes
+{% endif %}
 ONBOOT=yes
 NM_CONTROLLED=no
