@@ -8,7 +8,7 @@
     _iface_paths: "{{ ifcfg_files.files | map(attribute='path') | list }}"
 
 - set_fact:
-    _iface_string: "{% for path in _iface_paths %}{{ path.split('-')[-1] }} {% endfor %}"
+    _iface_string: "{% for path in _iface_paths %}{{ path.split('-', 2)[-1] }} {% endfor %}"
 
 - set_fact:
     el_network_unconfigured_ifaces: "{{ _iface_string.split() | list | difference(el_network_whitelist_ifaces) | difference(el_network_configured_ifaces) }}"

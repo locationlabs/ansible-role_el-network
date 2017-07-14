@@ -1,6 +1,18 @@
 # {{ ansible_managed }}
+{% if item.ovs|default(false) %}
+DEVICETYPE=ovs
+TYPE=OVSBridge
+{% else %}
 TYPE=Bridge
+{% endif %}
+{% if item.dhcp|default(None) %}
+BOOTPROTO=dhcp
+DEFROUTE=yes
+PEERDNS=yes
+PEERROUTES=yes
+{% else %}
 BOOTPROTO=none
+{% endif %}
 DEVICE={{ item.iface }}
 {% if item.ip4 is defined %}
 IPADDR={{ item.ip4|ipv4('address') }}

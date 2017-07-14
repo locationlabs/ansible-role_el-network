@@ -1,11 +1,19 @@
 # {{ ansible_managed }}
+{% if item.ovs|default(false) %}
+TYPE=OVSPort
+DEVICETYPE=ovs
+{% else %}
 TYPE=bond
+{% endif %}
 BOOTPROTO=none
 BONDING_MASTER=yes
 DEVICE={{ item.iface }}
 {% if item.bridge is defined %}
-BRIDGE={{ item.bridge }}
+{% if item.ovs|default(false) %}
+OVS_BRIDGE={{ item.bridge }}
 {% else %}
+BRIDGE={{ item.bridge }}
+{% endif %}
 {% if item.ip4 is defined %}
 IPADDR={{ item.ip4|ipv4('address') }}
 PREFIX={{ item.ip4|ipv4('prefix') }}
