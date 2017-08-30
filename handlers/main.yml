@@ -1,7 +1,16 @@
 ---
-  - name: restart networking
+  - name: restart centos7 networking
     systemd:
       name: network
       state: restarted
     async: 45
     poll: 5
+    when: ansible_distribution_major_version | version_compare('7', operator='==')
+
+  - name: restart centos6 networking
+    service:
+      name: network
+      state: restarted
+    async: 45
+    poll: 5
+    when: ansible_distribution_major_version | version_compare('6', operator='==')

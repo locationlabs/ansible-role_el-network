@@ -1,9 +1,16 @@
 ---
+  - name: CentOS 6 pre-req
+    yum:
+      name: libselinux-python
+      state: present
+    when: ansible_distribution_major_version | version_compare('6', operator='==')
+
   - name: Disable NetworkManager
     systemd:
       name: NetworkManager
       state: stopped
       enabled: no
+    when: ansible_distribution_major_version | version_compare('7', operator='==')
 
   - include: discovery.yml
 
@@ -14,7 +21,8 @@
     with_items:
       - "{{ el_network_interfaces }}"
     notify:
-      - restart networking
+      - restart centos6 networking
+      - restart centos7 networking
 
   - name: Delete unconfigured network interfaces
     file:
@@ -24,4 +32,5 @@
       - "{{ el_network_unconfigured_ifaces }}"
     when: el_network_unconfigured_ifaces.0 is defined
     notify:
-      - restart networking
+      - restart centos6 networking
+      - restart centos7 networking
