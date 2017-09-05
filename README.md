@@ -9,6 +9,23 @@ Ansible role for managing network interfaces on enterprise linux.
 ## Role Variables
 
 * `el_network_interfaces`: List of interfaces
+	* `iface`: Name of the interface
+	* Common interface options:
+		* `ip4`: IPv4 address in CIDR notation
+		* `gw4`: Default gateway
+		* `bridge`: Name of bridge interface this is a member of
+	* `type`: Type of interface
+		* ethernet
+			* `dhcp`: Enable dhcp
+			* `vlan`: Enable vlan support
+		* bond-slave
+			* `master`: Name of parent bond interface
+		* bond
+			* `bonding_mode`: Default value 4 - 802.3ad
+			* `lacp_rate`: Default value 1 - fast
+			* `xmit_hash_policy`: Default value layer3+4
+			* `miimon`: Default value 100
+		* bridge
 * `el_network_whitelist_ifaces`: List of whitelisted interfaces to not remove. Typically lo and idrac.
 * `el_network_configured_ifaces`: Auto-generated variable that is a list of interfaces on the target host to configure.
 
