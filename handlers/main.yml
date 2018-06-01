@@ -1,4 +1,6 @@
 ---
+# Adding not ansible_check_mode conditional because async module issue
+# https://github.com/ansible/ansible/issues/40991
   - name: restart centos7 networking
     systemd:
       name: network
