@@ -6,6 +6,8 @@ Ansible role for managing network interfaces on enterprise linux.
 
 * netaddr
 
+**Note**: This role isn't compatible with firewalld
+
 ## Role Variables
 
 * `el_network_interfaces`: List of interfaces
