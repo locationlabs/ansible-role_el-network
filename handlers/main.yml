@@ -1,22 +1,33 @@
 ---
-# Adding not ansible_check_mode conditional because async module issue
-# https://github.com/ansible/ansible/issues/40991
-  - name: restart centos7 networking
-    systemd:
-      name: network
-      state: restarted
-    async: 45
-    poll: 5
-    when:
-      - ansible_distribution_major_version | version_compare('7', operator='==')
-      - not ansible_check_mode
+  # Adding not ansible_check_mode conditional because async module issue
+  # https://github.com/ansible/ansible/issues/40991
 
-  - name: restart centos6 networking
-    service:
-      name: network
-      state: restarted
-    async: 45
-    poll: 5
-    when:
-      - ansible_distribution_major_version | version_compare('6', operator='==')
-      - not ansible_check_mode
+    - name: restart centos8 networking
+      systemd:
+        name: network
+        state: restarted
+      async: 45
+      poll: 5
+      when:
+        - ansible_distribution_major_version == "8"
+        - not ansible_check_mode
+
+    - name: restart centos7 networking
+      systemd:
+        name: network
+        state: restarted
+      async: 45
+      poll: 5
+      when:
+        - ansible_distribution_major_version == "7"
+        - not ansible_check_mode
+  
+    - name: restart centos6 networking
+      service:
+        name: network
+        state: restarted
+      async: 45
+      poll: 5
+      when:
+        - ansible_distribution_major_version == "6"
+        - not ansible_check_mode
